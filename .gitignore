@@ -26,3 +26,8 @@ yarn-error.log*
 dist
 build
 .swp
+
+.merlin
+.bsb.lock
+*.bs.js
+/lib/bs/

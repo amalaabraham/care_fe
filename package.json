@@ -69,6 +69,7 @@
     "react-redux": "^7.1.1",
     "react-scripts": "3.3.1",
     "react-virtualized": "^9.21.2",
+    "reason-react": ">=0.7.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "resolve": "1.12.0",
@@ -77,6 +78,8 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "re:build": "bsb -make-world -clean-world",
+    "re:watch": "bsb -make-world -clean-world -w",
     "start": "webpack-dev-server --open",
     "build": "./node_modules/.bin/webpack --mode=production"
   },
@@ -97,6 +100,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
+    "bs-platform": "7.0.1",
     "css-loader": "^3.2.0",
     "cypress": "^4.4.0",
     "eslint": "^6.4.0",
