@@ -12,6 +12,7 @@ import {
   MultilineInputField,
   SelectField,
   TextInputField,
+  AutoCompleteAsyncField,
 } from "../Common/HelperInputFields";
 import { Loading } from "../Common/Loading";
 import PageTitle from "../Common/PageTitle";
@@ -78,6 +79,7 @@ export const SampleTest = (props: any) => {
   const [facilityName, setFacilityName] = useState<Array<FacilityNameModel>>(
     []
   );
+  const [hasSearchText, setHasSearchText] = useState(false);
 
   const headerText = "Request Sample";
   const buttonText = "Confirm your request to send sample for testing";
@@ -212,6 +214,17 @@ export const SampleTest = (props: any) => {
     const form = { ...state.form };
     form[e.target.name] = e.target.value;
     dispatch({ type: "set_form", form });
+  };
+  //   const handleValueChange = (current: FacilityNameModel | FacilityNameModel[] | null) => {
+  //     if (!current) {
+  //         setFacilityList([]);
+  //         setHasSearchText(false);
+  //     }
+  //     setSelected(current);
+  // };
+  const handelSearch = (e: any) => {
+    setHasSearchText(!!e.target.value);
+    fetchFacilityName(e.target.value);
   };
 
   const handleCheckboxFieldChange = (e: any) => {
@@ -348,7 +361,33 @@ export const SampleTest = (props: any) => {
               <InputLabel>Testing Facility Name</InputLabel>
 
               <div className="mt-2 w-1/3 ">
-                <SelectField
+
+                <AutoCompleteAsyncField
+                  name="testing_facility"
+                  variant="outlined"
+                  margin="dense"
+                  value={state.form.testing_facility}
+                  options={facilityName.map((e) => {
+                    return { id: e.id, name: e.name };
+                  })}
+                  onSearch={handelSearch}
+                  onChange={handleChange}
+                  placeholder="Search by facility name "
+                  noOptionsText={
+                    hasSearchText
+                      ? "No facility found, please try again"
+                      : "Start typing to begin search"
+                  }
+                  renderOption={(option: any) => <div>{option.name}</div>}
+                  getOptionSelected={(option: any, value: any) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(option: any) => option.name}
+                  // filterOptions={(options: FacilityNameModel[]) => options}
+                  errors={state.errors.testing_facility}
+                />
+             
+                {/* <SelectField
                   name="testing_facility"
                   variant="outlined"
                   margin="dense"
@@ -360,7 +399,7 @@ export const SampleTest = (props: any) => {
                   optionKey="id"
                   onChange={handleChange}
                   errors={state.errors.testing_facility}
-                />
+                /> */}
               </div>
               <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-2">
                 <div>
